@@ -3,4 +3,4 @@ button
 
 Testing electric imp
 
-Project home page
+<a href="http://rodgau.github.io/button/" target="_blank">Project Home</a>
