@@ -1,5 +1,13 @@
-// create a global variabled called led,
-// and assign pin9 to it
+/** basic button and LED test.
+* A button is polled every 0.5 sec.
+* Its pressed/not pressed status is sent to server.log
+* Simultaneously, an LED is either turned on or off to match.
+* 
+* Revision History
+*   Build:
+*   008: working base
+*/
+
 led <- hardware.pin9;
 // configure led to be a digital output
 led.configure(DIGITAL_OUT);
@@ -16,16 +24,16 @@ function getButton() {
 		server.log("button is PRESSED");
 	else
 		server.log("button is NOT PRESSED");
-	setLed(buttonStatus);
+	setLed();
 
 	// register polling wakup event
 	imp.wakeup(0.5, getButton);
 }
 
 // function to turn LED on or off
-function setLed(ledState) {
-	server.log("Set LED: " + ledState);
-	led.write(ledState);
+function setLed() {
+	server.log("Set LED: " + buttonStatus);
+	led.write(buttonStatus);
 }
  
 // start the loop
