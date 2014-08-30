@@ -1,0 +1,32 @@
+// create a global variabled called led,
+// and assign pin9 to it
+led <- hardware.pin9;
+// configure led to be a digital output
+led.configure(DIGITAL_OUT);
+
+button1 <- hardware.pin1;
+button1.configure(DIGITAL_IN);
+buttonStatus <- 0;
+
+
+// function to read button state
+function getButton() {
+	buttonStatus <- button1.read();
+	if (buttonStatus == 1)
+		server.log("button is PRESSED");
+	else
+		server.log("button is NOT PRESSED");
+	setLed(buttonStatus);
+
+	// register polling wakup event
+	imp.wakeup(0.5, getButton);
+}
+
+// function to turn LED on or off
+function setLed(ledState) {
+	server.log("Set LED: " + ledState);
+	led.write(ledState);
+}
+ 
+// start the loop
+getButton();
