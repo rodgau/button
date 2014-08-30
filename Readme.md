@@ -6,7 +6,7 @@ This is an introductory [electric imp](http://electricimp.com) project.
 
 This project simply reads the state of a button hooked up to an *electric imp* and updates the server.log with its either *pressed* or *not pressed* status.
 
-# Device-side Functionality #
+### Device-side Functionality  ###
 as above...
-# Agent-side Functionality #
+### Agent-side Functionality  ###
 None.
