@@ -1,7 +1,6 @@
-/** basic button and LED test.
-* A button is polled every 0.5 sec.
-* Its pressed/not pressed status is sent to server.log
-* Simultaneously, an LED is either turned on or off to match.
+/** LED turns on or off via an imp Event handler.
+* Event:  a button changes state (i.e. either  pressed or released).
+* Handler: read button pin's' digital state and set LED pin to match.
 * 
 * Revision History
 *   Build:
@@ -9,32 +8,32 @@
 */
 
 led <- hardware.pin9;
-// configure led to be a digital output
 led.configure(DIGITAL_OUT);
 
 button1 <- hardware.pin1;
-button1.configure(DIGITAL_IN);
-buttonStatus <- 0;
+ledState <- 0;
 
+// event handler - button press/release
+function button1_handler()
+{
+// this fires whenever button either presses or releases
+// Could simply toggle ledState here, but I've found that with
+// very button presses it can get out of sync.
 
-// function to read button state
-function getButton() {
-	buttonStatus <- button1.read();
-	if (buttonStatus == 1)
-		server.log("button is PRESSED");
-	else
-		server.log("button is NOT PRESSED");
-	setLed();
-
-	// register polling wakup event
-	imp.wakeup(0.5, getButton);
+	ledState <- button1.read();
+	server.log("Set LED: " + ledState);
+	led.write(ledState);
 }
 
-// function to turn LED on or off
-function setLed() {
-	server.log("Set LED: " + buttonStatus);
-	led.write(buttonStatus);
+// start above defined button handler
+button1.configure( DIGITAL_IN, button1_handler );
+
+
+// main loop
+function main() {
+	server.log( "bumBump...");
+	imp.wakeup(3.0, main);
 }
- 
-// start the loop
-getButton();
+
+// start main loop
+main();
