@@ -3,6 +3,8 @@
 * Its pressed/not pressed status is sent to server.log
 * Simultaneously, an LED is either turned on or off to match.
 * 
+* Author: Rod Gau
+* 
 * Revision History
 *   Build:
 *   008: working base
